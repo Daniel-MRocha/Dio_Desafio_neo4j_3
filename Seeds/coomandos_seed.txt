@@ -1,0 +1,18 @@
+LOAD CSV WITH HEADERS FROM 'file:///facebook.csv' AS atribForRow
+WITH atribForRow
+CALL{
+WITH atribForRow
+MERGE (u:USER{
+	IDD:atribForRow.userid,
+	DiasNaPlataforma:toInteger(atribForRow.tenure),
+	NumeroDeAmigos:toInteger(atribForRow.friend_count),
+	AmizadesIniciadas:toInteger(atribForRow.friendships_initiated),
+	likes_dado:toInteger(atribForRow.likes),
+	likes_recebidos:toInteger(atribForRow.likes_received),
+	likes_celular_dado:toInteger(atribForRow.mobile_likes),
+	likes_celular_recebidos:toInteger(atribForRow.mobile_likes_received),
+	likes_www_dado:toInteger(atribForRow.www_likes),
+	likes_www_recebidos:toInteger(atribForRow.www_likes_received)
+})
+} IN TRANSACTIONS OF 1000 ROWS
+RETURN COUNT(*) AS LINHAS
